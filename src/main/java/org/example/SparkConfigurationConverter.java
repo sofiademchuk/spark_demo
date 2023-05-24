@@ -2,19 +2,17 @@ package org.example;
 
 import com.google.common.base.Joiner;
 
-import java.util.ArrayList;
 import java.util.Map;
 import  java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
 
-
+@Slf4j
 public class SparkConfigurationConverter {
     public String convert(SparkAppConfiguration configuration) {
 
         StringBuilder builder = new StringBuilder();
+
         // --class
         String mainClassString = configuration.getMainClass();
         builder.append("--class " + mainClassString + " ");
@@ -149,8 +147,10 @@ public class SparkConfigurationConverter {
             String argsString = String.join(" ", args);
             builder.append(argsString + " ");
 
+        log.info(builder.toString());
         return String.valueOf(builder);
     }
+
 }
 
 
