@@ -9,7 +9,7 @@ import java.util.Map;
 public class SparkAppConfiguration {
    // -- master
     private String master;
-//AAAAAAAAAAAAAAAAAAAAAAAAAA
+
     // --deploy-mode
     private String deployMode;
 
