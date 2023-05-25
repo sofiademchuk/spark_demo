@@ -2,12 +2,14 @@ package org.example;
 
 import lombok.Data;
 
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Data
 public class SparkAppConfiguration {
-   // -- master
+    // -- master
     private String master;
 
     // --deploy-mode
@@ -20,28 +22,28 @@ public class SparkAppConfiguration {
     private String name;
 
     // --jars
-    private List<String> jars;
+    private List<String> jars = new ArrayList<>();
 
     // --packages
-    private List<String> packages;
+    private List<String> packages = new ArrayList<>();
 
     // --exclude-packages
-    private List<String> excludePackages;
+    private List<String> excludePackages = new ArrayList<>();
 
     // --repositories
-    private List<String> repositories;
+    private List<String> repositories = new ArrayList<>();
 
     // --py-files
-    private List<String> pyFiles;
+    private List<String> pyFiles = new ArrayList<>();
 
     // --files
-    private List<String> files;
+    private List<String> files = new ArrayList<>();
 
     // --archives
-    private List<String> archives;
+    private List<String> archives = new ArrayList<>();
 
     // --conf
-    private Map<String,String> conf;
+    private Map<String, String> conf = new HashMap<>();
 
     // --properties
     private String properties;
@@ -51,7 +53,6 @@ public class SparkAppConfiguration {
 
     // --driver-java-options
     private String driverJavaOptions;
-
 
     // --driver-library-path
     private String driverLibraryPath;
@@ -77,7 +78,6 @@ public class SparkAppConfiguration {
     // --remote
     private String remote;
 
-
     // --driver-cores
     private int driverCores;
 
@@ -91,13 +91,13 @@ public class SparkAppConfiguration {
     private String status;
 
     // --total-executor-cores
-    private int totalExecutorCores;
+    private Integer totalExecutorCores;
 
     // --executor-cores
-    private int executorCores;
+    private Integer executorCores;
 
     // --num-executors
-    private int numExecutors;
+    private Integer numExecutors;
 
     // --principal
     private String principal;
@@ -112,6 +112,6 @@ public class SparkAppConfiguration {
     private String appJar;
 
     // args
-    private List<String> args;
+    private List<String> args = new ArrayList<>();
 }
 
