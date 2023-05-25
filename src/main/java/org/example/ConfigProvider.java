@@ -27,9 +27,5 @@ public class ConfigProvider {
         return properties.getProperty("spark.master");
     }
 
-    public static void main(String[] args) {
-        ConfigProvider provider = new ConfigProvider();
-        String master = provider.sparkMaster();
-        log.info("Master is " + master);
-    }
+
 }
