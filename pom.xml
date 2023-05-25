@@ -6,11 +6,16 @@
 
     <groupId>org.example</groupId>
     <artifactId>spark_demo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>app_client</module>
+    </modules>
 
 
     <properties>
-        <spark.app.name>SparkExamples</spark.app.name>
+        <core.jar.name>SparkTestCore</core.jar.name>
+        <client.jar.name>SparkTestClient</client.jar.name>
 
         <spark.version>3.4.0</spark.version>
         <scala.version>2.12.12</scala.version>
@@ -18,6 +23,9 @@
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
+        <log4j.version>2.20.0</log4j.version>
+        <slf4j.version>2.0.5</slf4j.version>
 
     </properties>
 
@@ -46,28 +54,30 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.0-alpha1</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.3</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.3</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>2.0.0-alpha1</version>
+            <version>${slf4j.version}</version>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -95,9 +105,9 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <finalName>${spark.app.name}</finalName>
+                    <finalName>${core.jar.name}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <outputDirectory>${project.parent.basedir}</outputDirectory>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
