@@ -36,12 +36,13 @@ public class SparkConfigurationConverter {
         }
         // --conf, --properties
         Map<String, String> conf = configuration.getConf();
-        String confString = conf.entrySet()
-                .stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("--conf "));
-        builder.append("--conf " + confString + " ");
-
+        if(!conf.isEmpty()) {
+            String confString = conf.entrySet()
+                    .stream()
+                    .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .collect(Collectors.joining("--conf "));
+            builder.append("--conf " + confString + " ");
+        }
         String properties = configuration.getProperties();
         if (!properties.isEmpty()) {
             builder.append("--properties " + properties + " ");
