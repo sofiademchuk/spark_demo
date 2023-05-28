@@ -1,8 +1,6 @@
 package org.example;
 
-import org.example.SparkAppConfiguration;
-import org.example.SparkConfigurationConverter;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
@@ -12,16 +10,17 @@ public class ConfigurationTests {
         SparkAppConfiguration configuration = new SparkAppConfiguration();
         configuration.setMaster("lkwfj");
         configuration.setDeployMode("cluster");
-        configuration.setMainClass("org.example.MySparkApp");
+        configuration.setMainClass("org.example.SparkTestApp");
         configuration.setAppJar("c:/users/sonic/ideaprojects/App.jar");
 
         SparkConfigurationConverter converter = new SparkConfigurationConverter();
         String convertedRequest = converter.convert(configuration);
 
-        Assertions.assertTrue(convertedRequest.contains("--master lkwfj"));
-        Assertions.assertTrue(convertedRequest.contains("--deploy-mode cluster"));
-        Assertions.assertTrue(convertedRequest.contains("--class org.example.SparkTestApp"));
-        Assertions.assertTrue(convertedRequest.contains("c:/users/sonic/ideaprojects/App.jar"));
+        Assertions.assertThat(convertedRequest)
+                .contains("--master lkwfj ")
+                .contains("--deploy-mode cluster ")
+                .contains("--class org.example.SparkTestApp ")
+                .contains("c:/users/sonic/ideaprojects/App.jar ");
     }
 
     @Test
@@ -33,8 +32,9 @@ public class ConfigurationTests {
         SparkConfigurationConverter converter = new SparkConfigurationConverter();
         String convertedRequest = converter.convert(configuration);
 
-        Assertions.assertTrue(convertedRequest.contains("--conf key1=value1"));
-        Assertions.assertTrue(convertedRequest.contains("--conf key2=value2"));
+        Assertions.assertThat(convertedRequest)
+                .contains("--conf key1=value1")
+                .contains("--conf key2=value2");
     }
 
     @Test
@@ -44,7 +44,8 @@ public class ConfigurationTests {
         SparkConfigurationConverter converter = new SparkConfigurationConverter();
         String convertedRequest = converter.convert(configuration);
 
-        Assertions.assertTrue(convertedRequest.contains("1000"));
+        Assertions.assertThat(convertedRequest)
+                .contains("1000");
     }
 }
 
