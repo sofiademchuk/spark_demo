@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="Maven 1" modules="app_client,spark_demo,test_client" />
+    <profile name="Maven 1" modules="app_client,app_server,demo,spark_demo,test_client" />
   </component>
 </project>
