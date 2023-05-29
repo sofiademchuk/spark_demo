@@ -60,7 +60,6 @@ public class SparkAppConfiguration {
     // --driver-java-options
     private String driverJavaOptions;
 
-
     // --driver-library-path
     private String driverLibraryPath;
 
@@ -85,7 +84,6 @@ public class SparkAppConfiguration {
     // --remote
     private String remote;
 
-
     // --driver-cores
     private int driverCores;
 
@@ -99,13 +97,13 @@ public class SparkAppConfiguration {
     private String status;
 
     // --total-executor-cores
-    private int totalExecutorCores;
+    private Integer totalExecutorCores;
 
     // --executor-cores
-    private int executorCores;
+    private Integer executorCores;
 
     // --num-executors
-    private int numExecutors;
+    private Integer numExecutors;
 
     // --principal
     private String principal;

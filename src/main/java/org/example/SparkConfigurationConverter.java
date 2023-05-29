@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 @Slf4j
 public class SparkConfigurationConverter {
@@ -15,12 +15,16 @@ public class SparkConfigurationConverter {
         // --class
         String mainClassString = configuration.getMainClass();
         builder.append("--class " + mainClassString + " ");
+
         // --master
         String masterString = configuration.getMaster();
         builder.append("--master " + masterString + " ");
+
         // --deploy-mode
         String deployModeString = configuration.getDeployMode();
-        builder.append("--deploy-mode " + deployModeString + " ");
+        if (deployModeString != null && !deployModeString.isEmpty()) {
+            builder.append("--deploy-mode " + deployModeString + " ");
+        }
         // --supervise
         String isSupervise = Boolean.toString(configuration.isSupervise());
         if (isSupervise.equals("true")) {
@@ -29,20 +33,30 @@ public class SparkConfigurationConverter {
 
         // --name
         String name = configuration.getName();
-        builder.append("--name " + name + " ");
+        if (name != null && !name.isEmpty()) {
+            builder.append("--name " + name + " ");
+        }
 
         // --conf, --properties
         Map<String, String> conf = configuration.getConf();
-        conf.entrySet().stream()
-                .map(item -> " --conf " + item.getKey() + "=" + item.getValue())
-                .forEach(builder::append);
+        if (!conf.isEmpty()) {
+            String confString = conf.entrySet()
+                    .stream()
+                    .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .collect(Collectors.joining("--conf "));
+            builder.append("--conf " + confString + " ");
+        }
 
         String properties = configuration.getProperties();
-        builder.append("--properties " + properties + " ");
+        if (properties != null && !properties.isEmpty()) {
+            builder.append("--properties " + properties + " ");
+        }
 
         // --proxy-user
         String proxy = configuration.getProxyUser();
-        builder.append("--proxy-user " + properties + " ");
+        if (proxy != null && !proxy.isEmpty()) {
+            builder.append("--proxy-user " + properties + " ");
+        }
 
         // --packages
         List<String> packages = configuration.getPackages();
@@ -53,71 +67,97 @@ public class SparkConfigurationConverter {
 
         //--exclude-packages
         List<String> excludePackages = configuration.getExcludePackages();
-        String excludePackagesString = String.join(",", excludePackages);
-        builder.append("--exclude-packages " + excludePackagesString + " ");
+        if (!excludePackages.isEmpty()) {
+            String excludePackagesString = String.join(",", excludePackages);
+            builder.append("--exclude-packages " + excludePackagesString + " ");
+        }
 
         // driver parameters
         String driverMemoryString = configuration.getDriverMemory();
-        builder.append("--driver-memory " + driverMemoryString + " ");
+        if (driverMemoryString != null && !driverMemoryString.isEmpty()) {
+            builder.append("--driver-memory " + driverMemoryString + " ");
+        }
 
         String driverJvOptString = configuration.getDriverJavaOptions();
-        builder.append("--driver-java-options " + driverJvOptString + " ");
+        if (driverJvOptString != null && !driverJvOptString.isEmpty()) {
+            builder.append("--driver-java-options " + driverJvOptString + " ");
+        }
 
         String driverLbPathString = configuration.getDriverLibraryPath();
-        builder.append("--driver-library-path " + driverJvOptString + " ");
+        if (driverLbPathString != null && !driverLbPathString.isEmpty()) {
+            builder.append("--driver-library-path " + driverJvOptString + " ");
+        }
 
         String driverClassPathString = configuration.getDriverClassPath();
-        builder.append("--driver-class-path " + driverClassPathString + " ");
+        if (driverClassPathString != null && !driverClassPathString.isEmpty()) {
+            builder.append("--driver-class-path " + driverClassPathString + " ");
+        }
 
         String driverCores = String.valueOf(configuration.getDriverCores());
-        builder.append("--driver-cores " + driverCores + " ");
-        // executor parameters
+        if (driverCores != null && !driverCores.isEmpty()) {builder.append("--driver-cores " + driverCores + " ");
+        }// executor parameters
         String executorMemString = configuration.getExecutorMemory();
-        builder.append("--executor-memory " + executorMemString + " ");
+        if (executorMemString != null && !executorMemString.isEmpty()) {
+            builder.append("--executor-memory " + executorMemString + " ");
+        }
 
         String numExecutorsString = String.valueOf(configuration.getNumExecutors());
-        builder.append("--num-executors " + numExecutorsString + " ");
+        if (numExecutorsString != null && !numExecutorsString.isEmpty()) {
+            builder.append("--num-executors " + numExecutorsString + " ");
+        }
 
         String totalExecutorCoresString = String.valueOf(configuration.getTotalExecutorCores());
-        builder.append("--total-executor-cores " + totalExecutorCoresString + " ");
+        if (totalExecutorCoresString != null && !totalExecutorCoresString.isEmpty()) {
+            builder.append("--total-executor-cores " + totalExecutorCoresString + " ");
+        }
 
         String executorCoresString = String.valueOf(configuration.getExecutorCores());
-        builder.append("--executor-cores " + executorCoresString + " ");
+        if (executorCoresString != null && !executorCoresString.isEmpty()) {
+            builder.append("--executor-cores " + executorCoresString + " ");
+        }
 
         // --jars, --repositories, --py-files, ---archives
         List<String> jars = configuration.getJars();
-        String jarsString = String.join(",", jars);
-        builder.append("--jars " + jarsString + " ");
+        if (!jars.isEmpty()) {String jarsString = String.join(",", jars);
+        builder.append("--jars " + jarsString + " ");}
 
         List<String> repositories = configuration.getRepositories();
-        String repString = String.join(",", repositories);
-        builder.append("--repositories " + repString + " ");
+        if (!repositories.isEmpty()) {String repString = String.join(",", repositories);
+        builder.append("--repositories " + repString + " ");}
 
         List<String> pyFiles = configuration.getPyFiles();
-        String pyFilesString = String.join(",", pyFiles);
-        builder.append("--py-files " + pyFilesString + " ");
+        if (!pyFiles.isEmpty()) {String pyFilesString = String.join(",", pyFiles);
+        builder.append("--py-files " + pyFilesString + " ");}
 
         List<String> files = configuration.getFiles();
-        String filesString = String.join(",", files);
-        builder.append("--files " + filesString + " ");
+        if (!files.isEmpty()) {String filesString = String.join(",", files);
+        builder.append("--files " + filesString + " ");}
 
         List<String> archives = configuration.getArchives();
-        String archivesString = String.join(",", archives);
-        builder.append("--archives " + archivesString + " ");
+        if (!archives.isEmpty()) {String archivesString = String.join(",", archives);
+        builder.append("--archives " + archivesString + " ");}
 
         // --kill, --status
         String kill = configuration.getKill();
-        builder.append("--kill " + kill + " ");
+        if (kill != null && !kill.isEmpty()) {
+            builder.append("--kill " + kill + " ");
+        }
 
         String status = configuration.getStatus();
-        builder.append("--status " + status + " ");
+        if (status != null && !status.isEmpty()) {
+            builder.append("--status " + status + " ");
+        }
 
         // --principal, --keytab
         String principal = configuration.getPrincipal();
-        builder.append("--principal " + principal + " ");
+        if (principal != null && !principal.isEmpty()) {
+            builder.append("--principal " + principal + " ");
+        }
 
         String keytab = configuration.getKeytab();
-        builder.append("--keytab " + keytab + " ");
+        if (keytab != null && !keytab.isEmpty()) {
+            builder.append("--keytab " + keytab + " ");
+        }
 
         // --help, verbose, version
         String isHelp = Boolean.toString(configuration.isHelp());
@@ -136,11 +176,15 @@ public class SparkConfigurationConverter {
         }
         // --remote
         String remote = configuration.getRemote();
-        builder.append("--remote " + remote + " ");
+        if (remote != null && !remote.isEmpty()) {
+            builder.append("--remote " + remote + " ");
+        }
 
         // --queue
         String queue = configuration.getQueue();
-        builder.append("--queue " + queue + " ");
+        if (queue != null && !queue.isEmpty()) {
+            builder.append("--queue " + queue + " ");
+        }
 
         // <app-jar>, <args>
         String appJar = configuration.getAppJar();
