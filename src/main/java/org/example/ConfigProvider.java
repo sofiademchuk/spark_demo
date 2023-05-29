@@ -24,7 +24,7 @@ public class ConfigProvider {
     }
 
     public SyncType syncType() {
-        String type = properties.getProperty("test.sync.type", "noop");
+        String type = properties.getProperty("test.sync.type", "redis");
         return SyncType.valueOf(type);
     }
 
